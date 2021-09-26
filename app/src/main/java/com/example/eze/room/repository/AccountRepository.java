@@ -15,11 +15,13 @@ public class AccountRepository {
 
     private final AccountDao accountDao;
     private LiveData<List<Account>> accountLiveData;
+    private LiveData<Account> latestAccount;
 
     public AccountRepository(Application application) {
         EzeDatabase ezeDatabase = EzeDatabase.getInstance(application);
         accountDao = ezeDatabase.accountDao();
         accountLiveData = accountDao.getAllAccount();
+        latestAccount = accountDao.getLatestAccount();
     }
 
     public void insert(Account account){
@@ -40,6 +42,10 @@ public class AccountRepository {
 
     public LiveData<List<Account>> getAllAccount(){
         return accountLiveData;
+    }
+
+    public LiveData<Account> getLatestAccount(){
+        return latestAccount;
     }
 
     private static class InsertRunnable implements Runnable {

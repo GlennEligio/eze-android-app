@@ -5,8 +5,9 @@ import androidx.room.PrimaryKey;
 
 @Entity(tableName = "account_table")
 public class Account {
-    
-    @PrimaryKey
+
+    @PrimaryKey(autoGenerate = true)
+    public int localId;
     public String id;
     public String name;
     public String username;
@@ -19,6 +20,14 @@ public class Account {
         this.username = username;
         this.password = password;
         this.role = role;
+    }
+
+    public int getLocalId() {
+        return localId;
+    }
+
+    public void setLocalId(int localId) {
+        this.localId = localId;
     }
 
     public String getId() {

@@ -30,4 +30,10 @@ public interface RequestDao {
 
     @Query("SELECT * FROM request_table")
     LiveData<List<Request>> getAllRequest();
+
+    @Query("SELECT * FROM request_table WHERE status LIKE 'Pending' ORDER BY createdDate DESC")
+    LiveData<List<Request>> getPendingRequest();
+
+    @Query("SELECT * FROM request_table WHERE status LIKE 'Accepted' OR 'Rejected' ORDER BY createdDate DESC")
+    LiveData<List<Request>> getFinishedRequest();
 }

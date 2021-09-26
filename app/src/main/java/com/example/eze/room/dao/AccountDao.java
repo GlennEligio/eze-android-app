@@ -27,6 +27,9 @@ public interface AccountDao {
     @Query("DELETE FROM account_table")
     void deleteAllAccount();
 
-    @Query("SELECT * FROM account_table ORDER BY name DESC")
+    @Query("SELECT * FROM account_table ORDER BY name ASC")
     LiveData<List<Account>> getAllAccount();
+
+    @Query("SELECT * FROM account_table ORDER BY localId ASC LIMIT 1")
+    LiveData<Account> getLatestAccount();
 }

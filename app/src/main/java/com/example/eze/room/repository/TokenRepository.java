@@ -15,11 +15,13 @@ public class TokenRepository {
 
     private final TokenDao tokenDao;
     private LiveData<List<Token>> tokenLiveData;
+    private LiveData<Token> latestToken;
 
     public TokenRepository(Application application) {
         EzeDatabase ezeDatabase = EzeDatabase.getInstance(application);
         tokenDao = ezeDatabase.tokenDao();
         tokenLiveData = tokenDao.getAllToken();
+        latestToken = tokenDao.getLatestTokens();
     }
 
     public void insert(Token token){
@@ -42,6 +44,9 @@ public class TokenRepository {
         return tokenLiveData;
     }
 
+    public LiveData<Token> getLatestToken(){
+        return latestToken;
+    }
 
     private static class InsertRunnable implements Runnable{
 

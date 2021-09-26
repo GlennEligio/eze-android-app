@@ -4,6 +4,7 @@ import android.app.Application;
 
 import androidx.lifecycle.LiveData;
 
+import com.example.eze.R;
 import com.example.eze.executor.AppExecutors;
 import com.example.eze.model.Account;
 import com.example.eze.model.Request;
@@ -17,11 +18,15 @@ import java.util.List;
 public class RequestRepository {
     private final RequestDao requestDao;
     private LiveData<List<Request>> requestLiveData;
+    private LiveData<List<Request>> pendingRequestLiveData;
+    private LiveData<List<Request>> finishedRequestLiveData;
 
     public RequestRepository(Application application) {
         EzeDatabase ezeDatabase = EzeDatabase.getInstance(application);
         requestDao = ezeDatabase.requestDao();
         requestLiveData = requestDao.getAllRequest();
+        pendingRequestLiveData = requestDao.getPendingRequest();
+        finishedRequestLiveData = requestDao.getFinishedRequest();
     }
 
     public void insert(Request request){
@@ -42,6 +47,14 @@ public class RequestRepository {
 
     public LiveData<List<Request>> getAllRequest(){
         return requestLiveData;
+    }
+
+    public LiveData<List<Request>> getPendingRequest(){
+        return pendingRequestLiveData;
+    }
+
+    public LiveData<List<Request>> getFinishedRequest(){
+        return finishedRequestLiveData;
     }
 
     private static class InsertRunnable implements Runnable{

@@ -28,5 +28,8 @@ public interface TokenDao {
 
     @Query("SELECT * FROM token_table")
     LiveData<List<Token>> getAllToken();
+
+    @Query("SELECT * FROM token_table ORDER BY id DESC LIMIT 1")
+    LiveData<Token> getLatestTokens();
 }
 

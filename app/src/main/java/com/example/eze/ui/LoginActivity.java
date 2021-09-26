@@ -1,6 +1,7 @@
 package com.example.eze.ui;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
 import android.os.Bundle;
 import android.util.Log;
@@ -30,8 +31,7 @@ public class LoginActivity extends AppCompatActivity {
 
     private EditText edt_username;
     private EditText edt_password;
-    private Button btn_login;
-    private TextView txt_response;
+    private ConstraintLayout loginLayout, loadingLayout;
 
     private UserClient userClient;
 
@@ -63,10 +63,11 @@ public class LoginActivity extends AppCompatActivity {
     public void init() {
         edt_username = findViewById(R.id.edt_username);
         edt_password = findViewById(R.id.edt_password);
-        btn_login = findViewById(R.id.btn_Login);
-        txt_response = findViewById(R.id.txt_response);
+        loginLayout = findViewById(R.id.loginLayout);
+        loadingLayout = findViewById(R.id.loadingLayout);
     }
 
+    //Login Button OnCLick method
     public void Login(View view) {
         Log.d(TAG, "Button clicked");
         String username = edt_username.getText().toString();
@@ -74,6 +75,7 @@ public class LoginActivity extends AppCompatActivity {
 
         LoginAccount loginAccount = new LoginAccount(username, password);
         getLogin(loginAccount);
+
     }
 
     public void getLogin(LoginAccount loginAccount)
@@ -85,7 +87,7 @@ public class LoginActivity extends AppCompatActivity {
             public void onResponse(Call<AccountWithTokens> call, Response<AccountWithTokens> response) {
                 if(!response.isSuccessful())
                 {
-                    txt_response.setText("Code: " + response.code());
+                    Log.d(TAG, "Code: " + response.code());
                     return;
                 }
 
@@ -96,12 +98,12 @@ public class LoginActivity extends AppCompatActivity {
                         "AccessToken: " + accountWithTokens.getAccessToken() + "\n" +
                         "RefreshToken: " + accountWithTokens.getRefreshToken();
 
-                txt_response.setText(account);
+                Log.d(TAG, account);
             }
 
             @Override
             public void onFailure(Call<AccountWithTokens> call, Throwable t) {
-                txt_response.setText(t.getMessage());
+                Log.d(TAG, t.getMessage());
             }
         });
     }

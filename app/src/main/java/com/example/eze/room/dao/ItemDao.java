@@ -30,4 +30,7 @@ public interface ItemDao {
 
     @Query("DELETE FROM item_table")
     void deleteAllItems();
+
+    @Query("SELECT * FROM item_table WHERE id LIKE :itemId")
+    Item getItem(String itemId);
 }
