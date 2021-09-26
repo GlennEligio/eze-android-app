@@ -1,8 +1,10 @@
-package com.example.eze;
+package com.example.eze.ui;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+
+import com.example.eze.R;
 
 public class MainActivity extends AppCompatActivity {
 

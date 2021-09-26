@@ -1,14 +1,16 @@
-package com.example.eze;
+package com.example.eze.ui;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 
-public class RequestActivity extends AppCompatActivity {
+import com.example.eze.R;
+
+public class AccountActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_request);
+        setContentView(R.layout.activity_account);
     }
 }
