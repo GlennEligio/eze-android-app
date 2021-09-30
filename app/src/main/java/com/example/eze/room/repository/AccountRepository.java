@@ -6,8 +6,8 @@ import androidx.lifecycle.LiveData;
 
 import com.example.eze.executor.AppExecutors;
 import com.example.eze.model.Account;
-import com.example.eze.room.dao.AccountDao;
 import com.example.eze.room.database.EzeDatabase;
+import com.example.eze.room.dao.AccountDao;
 
 import java.util.List;
 

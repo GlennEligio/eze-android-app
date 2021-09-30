@@ -1,16 +1,20 @@
 package com.example.eze.model;
 
-import androidx.room.Embedded;
+import androidx.annotation.NonNull;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
+import androidx.room.TypeConverters;
+
+import com.example.eze.room.typeconverter.OffSetDateTimeConverter;
 
 import java.time.OffsetDateTime;
-import java.util.List;
 
 @Entity(tableName = "request_table")
+@TypeConverters(OffSetDateTimeConverter.class)
 public class Request {
 
     @PrimaryKey
+    @NonNull
     public String id;
     public String itemIds;
     public int itemCount;
@@ -20,7 +24,7 @@ public class Request {
     public String code;
     public String status;
 
-    public Request(String id, String itemIds, int itemCount, OffsetDateTime createdDate, String studentName, String professorName, String code, String status) {
+    public Request(@NonNull String id, String itemIds, int itemCount, OffsetDateTime createdDate, String studentName, String professorName, String code, String status) {
         this.id = id;
         this.itemIds = itemIds;
         this.itemCount = itemCount;

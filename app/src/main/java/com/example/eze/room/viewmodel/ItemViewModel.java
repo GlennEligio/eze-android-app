@@ -9,7 +9,6 @@ import androidx.lifecycle.LiveData;
 import com.example.eze.model.Item;
 import com.example.eze.room.repository.ItemRepository;
 
-import java.nio.file.Path;
 import java.util.List;
 
 public class ItemViewModel extends AndroidViewModel {

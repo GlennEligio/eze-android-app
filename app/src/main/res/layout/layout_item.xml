@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginEnd="8dp"
+    android:layout_marginStart="8dp"
+    android:layout_marginTop="8dp"
+    android:id="@+id/layout_item">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="8dp">
+
+        <TextView
+            android:layout_toStartOf="@id/img_accept_request"
+            android:id="@+id/txt_item_names"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Item names concatenated"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:layout_alignParentStart="true"
+            style="@style/TextAppearance.AppCompat.Large"/>
+
+        <ImageView
+            android:layout_margin="5dp"
+            android:layout_toStartOf="@id/img_reject_request"
+            android:id="@+id/img_accept_request"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_accept_request"
+            android:contentDescription="Accept button" />
+
+        <ImageView
+            android:layout_margin="5dp"
+            android:layout_alignParentEnd="true"
+            android:id="@+id/img_reject_request"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_reject_request"
+            android:contentDescription="Reject button" />
+
+
+
+        <TextView
+            android:id="@+id/txt_request_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Date of request"
+            android:layout_marginTop="3dp"
+            android:layout_below="@id/txt_item_names"/>
+
+
+    </RelativeLayout>
+
+</androidx.cardview.widget.CardView>

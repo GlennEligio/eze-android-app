@@ -7,19 +7,23 @@ import androidx.room.PrimaryKey;
 public class Account {
 
     @PrimaryKey(autoGenerate = true)
-    public int localId;
+    private int localId;
     public String id;
     public String name;
     public String username;
     public String password;
     public String role;
+    public String accessToken;
+    public String refreshToken;
 
-    public Account(String id, String name, String username, String password, String role) {
+    public Account(String id, String name, String username, String password, String role, String accessToken, String refreshToken) {
         this.id = id;
         this.name = name;
         this.username = username;
         this.password = password;
         this.role = role;
+        this.accessToken = accessToken;
+        this.refreshToken = refreshToken;
     }
 
     public int getLocalId() {
@@ -68,5 +72,21 @@ public class Account {
 
     public void setRole(String role) {
         this.role = role;
+    }
+
+    public String getAccessToken() {
+        return accessToken;
+    }
+
+    public void setAccessToken(String accessToken) {
+        this.accessToken = accessToken;
+    }
+
+    public String getRefreshToken() {
+        return refreshToken;
+    }
+
+    public void setRefreshToken(String refreshToken) {
+        this.refreshToken = refreshToken;
     }
 }

@@ -1,21 +1,27 @@
 package com.example.eze.model;
 
+import androidx.annotation.NonNull;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
+import androidx.room.TypeConverters;
+
+import com.example.eze.room.typeconverter.OffSetDateTimeConverter;
 
 import java.time.OffsetDateTime;
 
 @Entity(tableName = "item_table")
+@TypeConverters(OffSetDateTimeConverter.class)
 public class Item {
 
     @PrimaryKey
+    @NonNull
     public String id;
     public String name;
     public String description;
     public String condition;
     public OffsetDateTime createdDate;
 
-    public Item(String id, String name, String description, String condition, OffsetDateTime createdDate) {
+    public Item(@NonNull String id, String name, String description, String condition, OffsetDateTime createdDate) {
         this.id = id;
         this.name = name;
         this.description = description;
@@ -23,11 +29,12 @@ public class Item {
         this.createdDate = createdDate;
     }
 
+    @NonNull
     public String getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(@NonNull String id) {
         this.id = id;
     }
 

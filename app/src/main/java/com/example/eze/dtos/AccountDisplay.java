@@ -1,20 +1,14 @@
-package com.example.eze.model;
+package com.example.eze.dtos;
 
-import androidx.annotation.NonNull;
-import androidx.room.Entity;
-import androidx.room.PrimaryKey;
-
-@Entity(tableName = "professor_table")
-public class Professor {
-
-    @PrimaryKey
-    @NonNull
+public class AccountDisplay {
     public String id;
     public String name;
+    public String role;
 
-    public Professor(@NonNull String id, String name) {
+    public AccountDisplay(String id, String name, String role) {
         this.id = id;
         this.name = name;
+        this.role = role;
     }
 
     public String getId() {
@@ -31,5 +25,13 @@ public class Professor {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
     }
 }

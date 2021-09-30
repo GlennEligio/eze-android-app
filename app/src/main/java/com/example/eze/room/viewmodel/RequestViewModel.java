@@ -17,7 +17,6 @@ import java.util.List;
 public class RequestViewModel extends AndroidViewModel {
 
     private ItemRepository itemRepository;
-    private LiveData<List<Item>> allItems;
 
     private RequestRepository requestRepository;
     private LiveData<List<Request>> allRequests;
@@ -30,7 +29,6 @@ public class RequestViewModel extends AndroidViewModel {
         itemRepository = new ItemRepository(application);
         requestRepository = new RequestRepository(application);
 
-        allItems = itemRepository.getAllItem();
         allRequests = requestRepository.getAllRequest();
         allPendingRequest = requestRepository.getPendingRequest();
         allFinishedRequest = requestRepository.getFinishedRequest();
@@ -52,8 +50,8 @@ public class RequestViewModel extends AndroidViewModel {
         itemRepository.deleteAll();
     }
 
-    public LiveData<List<Item>> getAllItems(){
-        return allItems;
+    public Item getItem(String itemId){
+        return itemRepository.getItem(itemId);
     }
 
     public void insertRequest(Request request){

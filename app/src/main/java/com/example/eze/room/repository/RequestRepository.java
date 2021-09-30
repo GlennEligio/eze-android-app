@@ -4,14 +4,10 @@ import android.app.Application;
 
 import androidx.lifecycle.LiveData;
 
-import com.example.eze.R;
 import com.example.eze.executor.AppExecutors;
-import com.example.eze.model.Account;
 import com.example.eze.model.Request;
-import com.example.eze.room.dao.AccountDao;
-import com.example.eze.room.dao.ItemDao;
-import com.example.eze.room.dao.RequestDao;
 import com.example.eze.room.database.EzeDatabase;
+import com.example.eze.room.dao.RequestDao;
 
 import java.util.List;
 

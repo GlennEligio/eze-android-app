@@ -6,8 +6,8 @@ import androidx.lifecycle.LiveData;
 
 import com.example.eze.executor.AppExecutors;
 import com.example.eze.model.Token;
-import com.example.eze.room.dao.TokenDao;
 import com.example.eze.room.database.EzeDatabase;
+import com.example.eze.room.dao.TokenDao;
 
 import java.util.List;
 

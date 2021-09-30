@@ -1,5 +1,8 @@
 package com.example.eze.retrofit;
 
+import androidx.core.app.NotificationCompat;
+
+import com.example.eze.dtos.AccountDisplay;
 import com.example.eze.dtos.AccountWithTokens;
 import com.example.eze.dtos.CreateAccount;
 import com.example.eze.dtos.LoginAccount;
@@ -29,4 +32,6 @@ public interface UserClient {
      @POST("api/account/RefreshToken")
      Call<AccountWithTokens> refreshToken(@Body RefreshRequest refreshRequest);
 
+     @GET("api/account/role/{role}")
+     Call<AccountDisplay> getAccountByRole(@Path("role") String role);
 }

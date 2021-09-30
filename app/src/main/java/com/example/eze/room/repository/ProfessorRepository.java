@@ -6,8 +6,8 @@ import androidx.lifecycle.LiveData;
 
 import com.example.eze.executor.AppExecutors;
 import com.example.eze.model.Professor;
-import com.example.eze.room.dao.ProfessorDao;
 import com.example.eze.room.database.EzeDatabase;
+import com.example.eze.room.dao.ProfessorDao;
 
 import java.util.List;
 

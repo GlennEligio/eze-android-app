@@ -6,14 +6,13 @@ import androidx.lifecycle.LiveData;
 
 import com.example.eze.executor.AppExecutors;
 import com.example.eze.model.Item;
-import com.example.eze.room.dao.ItemDao;
 import com.example.eze.room.database.EzeDatabase;
+import com.example.eze.room.dao.ItemDao;
 
 import java.util.List;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
-import java.util.concurrent.FutureTask;
 
 public class ItemRepository {
 

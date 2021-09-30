@@ -1,18 +1,30 @@
 package com.example.eze.dtos;
 
 public class AccountWithTokens {
+    public String id;
     public String name;
     public String username;
     public String password;
+    public String role;
     public String accessToken;
     public String refreshToken;
 
-    public AccountWithTokens(String name, String username, String password, String accessToken, String refreshToken) {
+    public AccountWithTokens(String id, String name, String username, String password, String role, String accessToken, String refreshToken) {
+        this.id = id;
         this.name = name;
         this.username = username;
         this.password = password;
+        this.role = role;
         this.accessToken = accessToken;
         this.refreshToken = refreshToken;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getName() {
@@ -37,6 +49,14 @@ public class AccountWithTokens {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
     }
 
     public String getAccessToken() {

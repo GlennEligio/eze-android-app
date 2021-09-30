@@ -19,7 +19,7 @@ import com.example.eze.room.dao.ProfessorDao;
 import com.example.eze.room.dao.RequestDao;
 import com.example.eze.room.dao.TokenDao;
 
-@Database(entities = {Account.class, Item.class, Professor.class, Request.class, Token.class}, version = 1)
+@Database(entities = {Account.class, Item.class, Professor.class, Request.class, Token.class}, version = 2, exportSchema = false)
 public abstract class EzeDatabase extends RoomDatabase {
     private static final String TAG = "EzeDatabase";
     private static EzeDatabase instance;
@@ -35,6 +35,7 @@ public abstract class EzeDatabase extends RoomDatabase {
             instance = Room.databaseBuilder(context.getApplicationContext(),
                     EzeDatabase.class, "eze_database")
                     .addCallback(callback)
+                    .fallbackToDestructiveMigration()
                     .build();
         }
         return instance;

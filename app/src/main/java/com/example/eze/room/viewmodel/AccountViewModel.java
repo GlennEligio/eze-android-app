@@ -8,16 +8,19 @@ import androidx.lifecycle.LiveData;
 
 import com.example.eze.model.Account;
 import com.example.eze.room.repository.AccountRepository;
+import com.example.eze.room.repository.TokenRepository;
 
 public class AccountViewModel extends AndroidViewModel {
 
     private AccountRepository accountRepository;
+    private TokenRepository tokenRepository;
     private LiveData<Account> latestAccount;
 
     public AccountViewModel(@NonNull Application application) {
         super(application);
         accountRepository = new AccountRepository(application);
         latestAccount = accountRepository.getLatestAccount();
+
     }
 
     public void insert(Account account){

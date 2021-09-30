@@ -30,6 +30,6 @@ public interface AccountDao {
     @Query("SELECT * FROM account_table ORDER BY name ASC")
     LiveData<List<Account>> getAllAccount();
 
-    @Query("SELECT * FROM account_table ORDER BY localId ASC LIMIT 1")
+    @Query("SELECT * FROM account_table ORDER BY id DESC LIMIT 1")
     LiveData<Account> getLatestAccount();
 }
