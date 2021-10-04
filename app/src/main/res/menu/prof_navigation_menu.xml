@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/pendingRequestFragment"
+        android:icon="@drawable/ic_pending"
+        android:title="Pending Request"/>
+
+    <item
+        android:id="@+id/finishedRequestFragment"
+        android:icon="@drawable/ic_finished"
+        android:title="Finished Request"/>
+
+    <item
+        android:id="@+id/accountSettingFragment"
+        android:icon="@drawable/ic_profile"
+        android:title="Account"/>
+
+    <item
+        android:id="@+id/settingsFragment"
+        android:icon="@drawable/ic_settings"
+        android:title="Settings"/>
+
+
+</menu>

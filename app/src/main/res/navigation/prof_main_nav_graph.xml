@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/pendingRequestFragment">
+
+    <fragment
+        android:id="@+id/pendingRequestFragment"
+        android:name="com.eze.ui.fragments.PendingRequestFragment"
+        android:label="Pending Request"
+        tools:layout="@layout/fragment_pending_request">
+        <action
+            android:id="@+id/action_pendingRequestFragment_to_requestDetailsFragment"
+            app:destination="@id/requestDetailsFragment" />
+        <action
+            android:id="@+id/action_pendingRequestFragment_to_accountSettingFragment"
+            app:destination="@id/accountSettingFragment" />
+        <action
+            android:id="@+id/action_pendingRequestFragment_to_finishedRequestFragment"
+            app:destination="@id/finishedRequestFragment" />
+        <action
+            android:id="@+id/action_pendingRequestFragment_to_settingsFragment"
+            app:destination="@id/settingsFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/requestDetailsFragment"
+        android:name="com.eze.ui.fragments.RequestDetailsFragment"
+        android:label="Request Details"
+        tools:layout="@layout/fragment_request_details">
+        <action
+            android:id="@+id/action_requestDetailsFragment_to_pendingRequestFragment"
+            app:destination="@id/pendingRequestFragment"
+            app:popUpTo="@id/pendingRequestFragment"
+            app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_requestDetailsFragment_to_finishedRequestFragment"
+            app:destination="@id/finishedRequestFragment"
+            app:popUpTo="@id/finishedRequestFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/accountSettingFragment"
+        android:name="com.eze.ui.fragments.AccountSettingFragment"
+        android:label="Account"
+        tools:layout="@layout/fragment_account_setting" >
+        <action
+            android:id="@+id/action_accountSettingFragment_to_pendingRequestFragment"
+            app:destination="@id/pendingRequestFragment" />
+        <action
+            android:id="@+id/action_accountSettingFragment_to_finishedRequestFragment"
+            app:destination="@id/finishedRequestFragment" />
+        <action
+            android:id="@+id/action_accountSettingFragment_to_settingsFragment"
+            app:destination="@id/settingsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/finishedRequestFragment"
+        android:name="com.eze.ui.fragments.FinishedRequestFragment"
+        android:label="Finished Request"
+        tools:layout="@layout/fragment_finished_request">
+        <action
+            android:id="@+id/action_finishedRequestFragment_to_requestDetailsFragment"
+            app:destination="@id/requestDetailsFragment" />
+        <action
+            android:id="@+id/action_finishedRequestFragment_to_pendingRequestFragment"
+            app:destination="@id/pendingRequestFragment" />
+        <action
+            android:id="@+id/action_finishedRequestFragment_to_accountSettingFragment"
+            app:destination="@id/accountSettingFragment" />
+        <action
+            android:id="@+id/action_finishedRequestFragment_to_accountSettingFragment2"
+            app:destination="@id/accountSettingFragment" />
+        <action
+            android:id="@+id/action_finishedRequestFragment_to_pendingRequestFragment2"
+            app:destination="@id/pendingRequestFragment" />
+        <action
+            android:id="@+id/action_finishedRequestFragment_to_settingsFragment"
+            app:destination="@id/settingsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/settingsFragment"
+        android:name="com.eze.ui.fragments.SettingsFragment"
+        android:label="Settings"
+        tools:layout="@layout/fragment_settings">
+        <action
+            android:id="@+id/action_settingsFragment_to_accountSettingFragment"
+            app:destination="@id/accountSettingFragment" />
+        <action
+            android:id="@+id/action_settingsFragment_to_finishedRequestFragment"
+            app:destination="@id/finishedRequestFragment" />
+        <action
+            android:id="@+id/action_settingsFragment_to_pendingRequestFragment"
+            app:destination="@id/pendingRequestFragment" />
+    </fragment>
+</navigation>

@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.eze.ui.fragments.RequestDetailsFragment">
+
+    <!-- TODO: Update blank fragment layout -->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="20dp">
+
+        <TextView
+            android:id="@+id/txt_requestDetail_placeholder"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Request Details"
+            android:textSize="20sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/txt_requestId_placeholder"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="Request ID"
+            app:layout_constraintEnd_toEndOf="@+id/txt_requestDetail_placeholder"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@+id/txt_requestDetail_placeholder"
+            app:layout_constraintTop_toBottomOf="@+id/txt_requestDetail_placeholder" />
+
+        <TextView
+            android:id="@+id/txt_request_id"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="25dp"
+            android:text="TextView"
+            app:layout_constraintBottom_toBottomOf="@+id/txt_requestId_placeholder"
+            app:layout_constraintStart_toEndOf="@+id/txt_requestId_placeholder"
+            app:layout_constraintTop_toTopOf="@+id/txt_requestId_placeholder" />
+
+        <TextView
+            android:id="@+id/txt_requester_placeholder"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="Requested By: "
+            app:layout_constraintStart_toStartOf="@+id/txt_requestId_placeholder"
+            app:layout_constraintTop_toBottomOf="@+id/txt_requestId_placeholder" />
+
+        <TextView
+            android:id="@+id/txt_request_student"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="25dp"
+            android:text="TextView"
+            app:layout_constraintBottom_toBottomOf="@+id/txt_requester_placeholder"
+            app:layout_constraintStart_toEndOf="@+id/txt_requester_placeholder"
+            app:layout_constraintTop_toTopOf="@+id/txt_requester_placeholder" />
+
+        <TextView
+            android:id="@+id/txt_requestCode_placeholder"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="Request Code: "
+            app:layout_constraintStart_toStartOf="@+id/txt_requester_placeholder"
+            app:layout_constraintTop_toBottomOf="@+id/txt_requester_placeholder" />
+
+        <TextView
+            android:id="@+id/txt_request_code"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="25dp"
+            android:text="TextView"
+            app:layout_constraintBottom_toBottomOf="@+id/txt_requestCode_placeholder"
+            app:layout_constraintStart_toEndOf="@+id/txt_requestCode_placeholder"
+            app:layout_constraintTop_toTopOf="@+id/txt_requestCode_placeholder" />
+
+        <TextView
+            android:id="@+id/txt_requestDate_placeholder"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="Request Date"
+            app:layout_constraintStart_toStartOf="@+id/txt_requestCode_placeholder"
+            app:layout_constraintTop_toBottomOf="@+id/txt_requestCode_placeholder" />
+
+        <TextView
+            android:id="@+id/txt_request_date_fragment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="25dp"
+            android:text="TextView"
+            app:layout_constraintBottom_toBottomOf="@+id/txt_requestDate_placeholder"
+            app:layout_constraintStart_toEndOf="@+id/txt_requestDate_placeholder"
+            app:layout_constraintTop_toTopOf="@+id/txt_requestDate_placeholder" />
+
+        <TextView
+            android:id="@+id/txt_requestItem_placeholder"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="40dp"
+            android:text="Items to be borrowed"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/txt_requestDate_placeholder"
+            app:layout_constraintTop_toBottomOf="@+id/txt_requestDate_placeholder"
+            app:layout_constraintHorizontal_bias="0"/>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerView_request_details"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            app:layout_constraintBottom_toTopOf="@+id/btn_reject_request"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/txt_requestItem_placeholder"
+            app:layout_constraintVertical_bias="0.0" />
+
+        <Button
+            android:id="@+id/btn_accept_request"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Accept"
+            android:layout_marginBottom="15dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/btn_reject_request"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <Button
+            android:id="@+id/btn_reject_request"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Reject"
+            app:layout_constraintBottom_toBottomOf="@+id/btn_accept_request"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/btn_accept_request"
+            app:layout_constraintTop_toTopOf="@+id/btn_accept_request" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</FrameLayout>

@@ -4,4 +4,12 @@
     <string name="username">Username</string>
     <string name="password">Password</string>
     <string name="eze_logo">Eze Logo</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="account_id">Account ID</string>
+    <string name="mock_account_id">Mock Account Id</string>
+    <string name="mock_account_username">Mock Account Username</string>
+    <string name="account_image">Account Image</string>
+    <string name="enable_request_auto_refresh">Enable request auto-refresh</string>
+    <string name="enable_notification">Enable notification</string>
+    <string name="app_settings">App Settings</string>
 </resources>
