@@ -14,8 +14,6 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Eze">
         <activity android:name="com.eze.ui.ProfessorMainActivity" />
-        <activity android:name="com.eze.ui.AccountActivity" />
-        <activity android:name="com.eze.ui.RequestActivity" />
         <activity android:name="com.eze.ui.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

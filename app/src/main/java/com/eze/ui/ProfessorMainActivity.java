@@ -130,7 +130,6 @@ public class ProfessorMainActivity extends AppCompatActivity {
                 getPendingRequest(account.getId(), account.getAccessToken());
                 NotificationManagerCompat notificationManagerCompat = NotificationManagerCompat.from(ProfessorMainActivity.this);
                 notificationManagerCompat.cancelAll();
-//                setUpWorkerForNotificationRequest();
             }
         });
 
@@ -162,8 +161,6 @@ public class ProfessorMainActivity extends AppCompatActivity {
                     .setConstraints(constraints)
                     .setInputData(data)
                     .build();
-
-//            WorkManager.getInstance(this).enqueueUniqueWork(NOTIFICATION_WORK_REQUEST_NAME, ExistingWorkPolicy.REPLACE, oneTimeWorkRequest);
 
             WorkManager.getInstance(this).enqueueUniquePeriodicWork(NOTIFICATION_WORK_REQUEST_NAME, ExistingPeriodicWorkPolicy.REPLACE, periodicWorkRequest);
 
@@ -214,8 +211,6 @@ public class ProfessorMainActivity extends AppCompatActivity {
         }else{
             WorkManager.getInstance(this).cancelUniqueWork(NOTIFICATION_WORK_REQUEST_NAME);
         }
-
-
     }
 
     private void setUpNavigationView() {
