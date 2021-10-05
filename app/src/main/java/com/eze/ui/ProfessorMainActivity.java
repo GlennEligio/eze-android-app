@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 import androidx.core.view.GravityCompat;
@@ -36,6 +37,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.eze.R;
+import com.eze.dtos.RefreshRequest;
 import com.eze.dtos.RequestDto;
 import com.eze.helper.Helper;
 import com.eze.model.Account;
@@ -44,7 +46,10 @@ import com.eze.model.Request;
 import com.eze.receiver.NotificationRequestReceiver;
 import com.eze.retrofit.APIClient;
 import com.eze.retrofit.RequestClient;
+import com.eze.retrofit.UserClient;
+import com.eze.room.viewmodel.AccountViewModel;
 import com.eze.room.viewmodel.RequestViewModel;
+import com.eze.worker.RefreshJWTWorker;
 import com.eze.worker.UpdatePendingRequestWorker;
 import com.google.android.material.navigation.NavigationView;
 import com.google.gson.Gson;
@@ -75,6 +80,8 @@ public class ProfessorMainActivity extends AppCompatActivity {
     private static final String TAG = "ProfessorMainActivity";
     public static final String SERIALIZED_LOCAL_REQUEST_LIST = "com.eze.serializedLocalList";
     public static final String SERIALIZED_SERVER_REQUEST_LIST = "com.eze.serializedServerList";
+    public static final String SERIALIZED_ACCOUNT_FROM_SERVER = "com.eze.serializedAccountFromServer";
+    public static final String SERIALIZED_ACCOUNT_FROM_LOCAL_DB = "com.eze.serializedAccountFromLocalDb";
     public static final String ACCOUNT_ID_FOR_WORKER = "com.eze.accountIdForWorker";
     public static final String ACCESS_TOKEN_FOR_WORKER = "com.eze.accessTokenForWorker";
 
@@ -88,6 +95,7 @@ public class ProfessorMainActivity extends AppCompatActivity {
     public static Map<Integer, String> notificationRequest = new HashMap<>();
     public static final String NOTIFICATION_CODE = "com.eze.notificationCode";
     public static final String NOTIFICATION_WORK_REQUEST_NAME = "com.eze.notificationWorkRequestId";
+    public static final String REFRESH_JWT_WORK_REQUEST_NAME = "com.eze.refreshJwtWorkRequestName";
 
 
     private ImageView img_refresh, imgProfile, img_menu;
@@ -171,6 +179,13 @@ public class ProfessorMainActivity extends AppCompatActivity {
                     Log.d(TAG, "WorkInfo is finished");
                     Data progress = workInfo.getProgress();
                     String serverRequestsjson = progress.getString(SERIALIZED_SERVER_REQUEST_LIST);
+                    String serverAccountJson = progress.getString(SERIALIZED_ACCOUNT_FROM_SERVER);
+
+                    if(serverAccountJson != null){
+                        Type type = new TypeToken<Account>(){}.getType();
+                        Account serverAccount = gson.fromJson(serverAccountJson, type);
+                        requestViewModel.insertAccount(serverAccount);
+                    }
 
                     if(serverRequestsjson != null){
                         Log.d(TAG, "Request from server is fetched");
@@ -432,5 +447,47 @@ public class ProfessorMainActivity extends AppCompatActivity {
             Log.d(TAG, "sendIncomingRequestNotification: SummaryNotificationLaunched");
             manager.notify(1000, summaryRequestNotif.build());
         }
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        Account account = requestViewModel.getLatestAccount();
+        Gson gson = new Gson();
+
+        Data data = new Data.Builder()
+                .putString(SERIALIZED_ACCOUNT_FROM_LOCAL_DB, gson.toJson(account))
+                .build();
+
+        Constraints constraints = new Constraints.Builder()
+                .setRequiredNetworkType(NetworkType.CONNECTED)
+                .build();
+
+        PeriodicWorkRequest periodicWorkRequest = new PeriodicWorkRequest.Builder(RefreshJWTWorker.class, 1, TimeUnit.HOURS)
+                .setInputData(data)
+                .setConstraints(constraints)
+                .build();
+
+        WorkManager.getInstance(this).enqueueUniquePeriodicWork(REFRESH_JWT_WORK_REQUEST_NAME, ExistingPeriodicWorkPolicy.REPLACE, periodicWorkRequest);
+
+        WorkManager.getInstance(this).getWorkInfosForUniqueWorkLiveData(REFRESH_JWT_WORK_REQUEST_NAME).observe(this, new Observer<List<WorkInfo>>() {
+            @Override
+            public void onChanged(List<WorkInfo> workInfos) {
+                if(workInfos != null){
+                    WorkInfo workInfo = workInfos.get(0);
+                    if(workInfo != null){
+                        Data outputData = workInfo.getProgress();
+
+                    }
+                }
+            }
+        });
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        WorkManager.getInstance(this).cancelUniqueWork(REFRESH_JWT_WORK_REQUEST_NAME);
     }
 }

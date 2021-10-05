@@ -194,6 +194,4 @@ public class AccountSettingFragment extends Fragment {
             }
         });
     }
-
-
 }

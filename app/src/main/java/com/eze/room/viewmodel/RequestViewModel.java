@@ -95,6 +95,9 @@ public class RequestViewModel extends AndroidViewModel {
         return allFinishedRequest;
     }
 
+    public void insertAccount(Account account){
+        accountRepository.insert(account);
+    }
     public Account getLatestAccount(){
         return accountRepository.getLatestAccount();
     }

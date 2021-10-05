@@ -45,6 +45,7 @@ public class SettingsFragment extends Fragment {
         if(view == null){
             return;
         }
+
         sharedPreferences = view.getContext().getSharedPreferences(EZE_SETTING_PREFERENCES, Context.MODE_PRIVATE);
 
         SwitchCompat sw_enable_notification = view.findViewById(R.id.sw_enable_notification);
@@ -56,11 +57,12 @@ public class SettingsFragment extends Fragment {
                 if(isChecked){
                     editor.putBoolean(ENABLE_NOTIFICATION, true);
                     editor.apply();
+                    Toast.makeText(getContext(), "Restart the application for settings to take effect", Toast.LENGTH_SHORT).show();
                 }else{
                     editor.putBoolean(ENABLE_NOTIFICATION, false);
                     editor.apply();
+                    Toast.makeText(getContext(), "Restart the application for settings to take effect", Toast.LENGTH_SHORT).show();
                 }
-                Toast.makeText(getContext(), "Restart the application for settings to take effect", Toast.LENGTH_SHORT).show();
             }
         });
 

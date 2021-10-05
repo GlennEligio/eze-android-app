@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.SystemClock;
 import android.util.Log;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
@@ -12,11 +13,18 @@ import androidx.work.Data;
 import androidx.work.Worker;
 import androidx.work.WorkerParameters;
 
+import com.eze.dtos.AccountWithTokens;
+import com.eze.dtos.LoginAccount;
 import com.eze.dtos.RequestDto;
+import com.eze.helper.Helper;
+import com.eze.model.Account;
 import com.eze.retrofit.APIClient;
 import com.eze.retrofit.RequestClient;
+import com.eze.retrofit.UserClient;
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -27,8 +35,8 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-import static com.eze.ui.ProfessorMainActivity.ACCESS_TOKEN_FOR_WORKER;
-import static com.eze.ui.ProfessorMainActivity.ACCOUNT_ID_FOR_WORKER;
+import static com.eze.ui.ProfessorMainActivity.SERIALIZED_ACCOUNT_FROM_LOCAL_DB;
+import static com.eze.ui.ProfessorMainActivity.SERIALIZED_ACCOUNT_FROM_SERVER;
 import static com.eze.ui.ProfessorMainActivity.SERIALIZED_SERVER_REQUEST_LIST;
 
 public class UpdatePendingRequestWorker extends Worker {
@@ -41,9 +49,10 @@ public class UpdatePendingRequestWorker extends Worker {
     public static final String NOTIFICATION_WORK_REQUEST_NAME = "com.eze.notificationWorkRequestId";
 
     public RequestClient requestClient;
-    public String accessToken, accountId, serializedRequestList;
+    public UserClient userClient;
+    public String accountUsername, accountPassword;
     private final Context context;
-    private CountDownLatch countDownLatch;
+    private final CountDownLatch countDownLatch;
 
     private SharedPreferences sharedPreferences;
 
@@ -59,27 +68,34 @@ public class UpdatePendingRequestWorker extends Worker {
     public Result doWork() {
         Log.d(TAG, "Work is starting to fetch request");
         Data inputData = getInputData();
-        accessToken = inputData.getString(ACCESS_TOKEN_FOR_WORKER);
-        accountId = inputData.getString(ACCOUNT_ID_FOR_WORKER);
-        Log.d(TAG, "Access Token: " + accessToken + "\n"
-                        + "Account Id: " + accountId);
-
-//        serializedRequestList = inputData.getString(SERIALIZED_LOCAL_REQUEST_LIST);
-//        Log.d(TAG, serializedRequestList);
-//        sharedPreferences = context.getSharedPreferences(EZE_SETTING_PREFERENCES, Context.MODE_PRIVATE);
+        String localAccountJson = inputData.getString(SERIALIZED_ACCOUNT_FROM_LOCAL_DB);
 
         Gson gson = new Gson();
-//        Type type = new TypeToken<List<RequestDto>>(){}.getType();
+        Type type = new TypeToken<Account>() {
+        }.getType();
 
-//        List<RequestDto> localRequests = gson.fromJson(serializedRequestList, type);
-//        Log.d(TAG, "Local request size " + localRequests.size());
+        Account localAccount = gson.fromJson(localAccountJson, type);
+
+        if (localAccount == null) {
+            return Result.failure();
+        }
 
         requestClient = APIClient.getClient().create(RequestClient.class);
-        List<RequestDto> serverRequests = getPendingRequest(accountId, accessToken);
+        userClient = APIClient.getClient().create(UserClient.class);
+
+        Account account = getAccountWithRefreshedJWT(localAccount.getUsername(), localAccount.getPassword());
+
+
+        if (account == null) {
+            return Result.failure();
+        }
+
+        List<RequestDto> serverRequests = getPendingRequest(account.getId(), account.getAccessToken());
         Log.d(TAG, "Server request number: " + serverRequests.size());
 
         Data outputData = new Data.Builder()
                 .putString(SERIALIZED_SERVER_REQUEST_LIST, gson.toJson(serverRequests))
+                .putString(SERIALIZED_ACCOUNT_FROM_SERVER, gson.toJson(account))
                 .build();
 
         setProgressAsync(outputData);
@@ -87,6 +103,7 @@ public class UpdatePendingRequestWorker extends Worker {
         SystemClock.sleep(1000);
 
         return Result.success();
+
     }
 
     private List<RequestDto> getPendingRequest(String accountId, String accessToken) {
@@ -126,5 +143,41 @@ public class UpdatePendingRequestWorker extends Worker {
             e.printStackTrace();
             return null;
         }
+    }
+
+    private Account getAccountWithRefreshedJWT(String username, String password){
+        final Account[] account = new Account[1];
+        CountDownLatch countDownLatchForLogin = new CountDownLatch(1);
+        Call<AccountWithTokens> loginCall = userClient.getLogin(new LoginAccount(username, password));
+        loginCall.enqueue(new Callback<AccountWithTokens>() {
+            @Override
+            public void onResponse(Call<AccountWithTokens> call, Response<AccountWithTokens> response) {
+                if(!response.isSuccessful()){
+                    if(404 == response.code()) {
+                        Toast.makeText(context, "Account not in system", Toast.LENGTH_SHORT).show();
+                    }
+                    return;
+                }
+
+                AccountWithTokens accountWithTokens = response.body();
+                if(accountWithTokens != null){
+                    account[0] = Helper.asAccount(accountWithTokens);
+                    countDownLatchForLogin.countDown();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<AccountWithTokens> call, Throwable t) {
+                Log.d(TAG, t.getMessage());
+                countDownLatchForLogin.countDown();
+            }
+        });
+
+        try {
+            countDownLatchForLogin.await();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        return account[0];
     }
 }

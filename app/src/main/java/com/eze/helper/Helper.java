@@ -4,9 +4,12 @@ import android.os.Build;
 
 import androidx.annotation.RequiresApi;
 
+import com.eze.dtos.AccountWithTokens;
 import com.eze.dtos.RequestDto;
+import com.eze.model.Account;
 import com.eze.model.Item;
 import com.eze.model.Request;
+import com.eze.retrofit.UserClient;
 
 import java.time.OffsetDateTime;
 import java.time.format.DateTimeFormatter;
@@ -89,5 +92,15 @@ public class Helper {
 
         Random r = new Random();
         return r.nextInt((max - min) + 1) + min;
+    }
+
+    public static Account asAccount(AccountWithTokens accountWithTokens){
+        return new Account(accountWithTokens.getId(),
+                accountWithTokens.getName(),
+                accountWithTokens.getUsername(),
+                accountWithTokens.getPassword(),
+                accountWithTokens.getRole(),
+                accountWithTokens.getAccessToken(),
+                accountWithTokens.getRefreshToken());
     }
 }
