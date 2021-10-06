@@ -125,6 +125,7 @@ public class PendingRequestFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 if(!isPendingRequestEmpty){
+                    Toast.makeText(context, "No pending request to update", Toast.LENGTH_SHORT).show();
                     alertDialogForMultipleRequest("Rejected").show();
                 }
             }
