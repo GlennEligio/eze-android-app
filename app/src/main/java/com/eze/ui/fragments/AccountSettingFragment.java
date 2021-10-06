@@ -85,7 +85,7 @@ public class AccountSettingFragment extends Fragment {
         txt_account_name.setText(latestAccount.getName());
         txt_account_id.setText(latestAccount.getId());
         txt_account_role.setText(latestAccount.getRole());
-        img_profile.setImageResource(R.mipmap.download);
+        img_profile.setImageResource(R.mipmap.prof_default_image);
 
         relLayout_password.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -94,7 +94,6 @@ public class AccountSettingFragment extends Fragment {
                 final View dialogView = LayoutInflater.from(getContext()).inflate(R.layout.layout_password_change, null);
 
                 changePasswordDialog.setView(dialogView);
-                changePasswordDialog.setTitle("Change password");
 
                 final EditText edt_old_password = dialogView.findViewById(R.id.edt_old_password);
                 final EditText edt_new_password = dialogView.findViewById(R.id.edt_new_password);

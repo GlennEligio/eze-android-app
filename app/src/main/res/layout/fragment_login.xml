@@ -18,6 +18,7 @@
             android:visibility="visible">
 
             <EditText
+                android:inputType="textPassword"
                 android:id="@+id/fragment_edt_password"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

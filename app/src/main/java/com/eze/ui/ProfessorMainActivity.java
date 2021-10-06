@@ -129,6 +129,7 @@ public class ProfessorMainActivity extends AppCompatActivity {
             if(account != null){
                 txt_account_role.setText(account.getRole());
                 txt_account_name.setText(account.getName());
+                imgProfile.setImageResource(R.mipmap.prof_default_image);
             }
         }
 
@@ -264,6 +265,7 @@ public class ProfessorMainActivity extends AppCompatActivity {
 
         txt_account_name = view.findViewById(R.id.txt_account_name_navView);
         txt_account_role = view.findViewById(R.id.txt_account_role_navView);
+        imgProfile = view.findViewById(R.id.img_profile_navView);
 
         img_menu.setOnClickListener(new View.OnClickListener() {
             @Override
