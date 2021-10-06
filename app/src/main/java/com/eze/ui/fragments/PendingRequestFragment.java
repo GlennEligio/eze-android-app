@@ -50,6 +50,7 @@ public class PendingRequestFragment extends Fragment {
     private static final String TAG = "PendingRequestFragment";
     private String accountId = "";
     private String accessToken = "";
+    private boolean isPendingRequestEmpty = false;
 
     private RequestViewModel requestViewModel;
     private RecyclerView recyclerView;
@@ -104,6 +105,8 @@ public class PendingRequestFragment extends Fragment {
                     requestDtos.add(requestDto);
                 }
 
+                isPendingRequestEmpty = requestDtos.isEmpty();
+
                 adapter.submitList(requestDtos);
             }
         });
@@ -111,14 +114,19 @@ public class PendingRequestFragment extends Fragment {
         fab_acceptAll.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                alertDialogForMultipleRequest("Accepted").show();
+                if(!isPendingRequestEmpty){
+                    Toast.makeText(context, "No pending request to update", Toast.LENGTH_SHORT).show();
+                    alertDialogForMultipleRequest("Accepted").show();
+                }
             }
         });
 
         fab_rejectAll.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                alertDialogForMultipleRequest("Rejected").show();
+                if(!isPendingRequestEmpty){
+                    alertDialogForMultipleRequest("Rejected").show();
+                }
             }
         });
     }
